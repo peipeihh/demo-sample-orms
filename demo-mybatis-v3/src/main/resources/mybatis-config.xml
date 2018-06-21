@@ -13,7 +13,7 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url"
-                          value="jdbc:mysql://localhost:3306/simple_orm1?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>
+                          value="jdbc:mysql://localhost:3306/simple_orm?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>

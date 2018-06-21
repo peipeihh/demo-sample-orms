@@ -17,13 +17,13 @@
         update_time as updateTime
     </sql>
 
-    <select id="getById" resultType="com.pphh.demo.po.EmployeeEntity">
+    <select id="selectById" resultType="com.pphh.demo.po.EmployeeEntity">
         select
         <include refid="columns"/>
         from employee where id = #{id}
     </select>
 
-    <select id="getAll" resultType="com.pphh.demo.po.EmployeeEntity">
+    <select id="selectAll" resultType="com.pphh.demo.po.EmployeeEntity">
         select
         <include refid="columns"/>
         from employee where is_active = 1
