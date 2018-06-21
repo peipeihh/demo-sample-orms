@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pphh.demo.xml.mapper.EmployeeMapper">
+    <sql id="columns">
+        id ,
+        first_name as firstName,
+        last_name as lastName,
+        birth_date as birthDate,
+        employed,
+        occupation,
+        is_active as isActive,
+        insert_by as insertBy,
+        insert_time as insertTime,
+        update_by as updateBy,
+        update_time as updateTime
+    </sql>
+
+    <select id="getById" resultType="com.pphh.demo.po.EmployeeEntity">
+        select
+        <include refid="columns"/>
+        from employee where id = #{id}
+    </select>
+
+    <select id="getAll" resultType="com.pphh.demo.po.EmployeeEntity">
+        select
+        <include refid="columns"/>
+        from employee where is_active = 1
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.pphh.demo.po.EmployeeEntity">
+        insert into employee(first_name, last_name, birth_date, employed, occupation)
+        values(#{firstName},#{lastName},#{birthDate},#{employed},#{occupation})
+    </insert>
+
+    <update id="update" parameterType="com.pphh.demo.po.EmployeeEntity">
+        update
+        employee
+        set
+        <if test="firstName != null">first_name = #{firstName},</if>
+        last_name = #{lastName},
+        birth_date = #{birthDate},
+        employed = #{employed},
+        occupation = #{occupation},
+        update_time = CURRENT_TIMESTAMP
+        where
+        id = #{id}
+    </update>
+
+    <update id="delete" parameterType="com.pphh.demo.po.EmployeeEntity">
+        update
+        employee
+        set
+        is_active = 0,update_time = CURRENT_TIMESTAMP
+        where
+        id = #{id}
+    </update>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from employee where is_active != 0
+    </select>
+
+</mapper>
