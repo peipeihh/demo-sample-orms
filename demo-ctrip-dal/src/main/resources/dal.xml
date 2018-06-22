@@ -1,0 +1,14 @@
+<dal name="config">
+    <databaseSets>
+        <databaseSet name="simple_orm" provider="mySqlProvider">
+            <add name="simple_orm" databaseType="Master" sharding="" connectionString="simple_orm"/>
+        </databaseSet>
+    </databaseSets>
+    <ConnectionLocator>
+        <locator>com.ctrip.platform.dal.dao.datasource.DefaultDalConnectionLocator</locator>
+        <settings>
+            <!--<path>database.properties</path>-->
+            <dataSourceConfigureProvider>com.ctrip.platform.dal.dao.configure.PropertyFileConfigureProvider</dataSourceConfigureProvider>
+        </settings>
+    </ConnectionLocator>
+</dal>

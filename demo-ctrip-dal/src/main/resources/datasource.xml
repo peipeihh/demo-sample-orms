@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Datasources>
+    <Datasource name="simple_orm"
+                testWhileIdle="true"
+                testOnBorrow="true"
+                testOnReturn="false"
+                validationQuery="SELECT 1"
+                validationInterval="30000"
+                timeBetweenEvictionRunsMillis="30000"
+                maxActive="100"
+                minIdle="10"
+                maxWait="10000"
+                initialSize="10"
+                removeAbandonedTimeout="60"
+                removeAbandoned="true"
+                logAbandoned="true"
+                minEvictableIdleTimeMillis="30000"
+                option="sendTimeAsDateTime=false;sendStringParametersAsUnicode=false;rewriteBatchedStatements=true;allowMultiQueries=true;useUnicode=true;characterEncoding=UTF-8"/>
+
+</Datasources>

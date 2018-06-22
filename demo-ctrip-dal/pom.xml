@@ -11,5 +11,16 @@
 
     <artifactId>demo-ctrip-dal</artifactId>
 
+    <properties>
+        <dal-client-version>1.15.3</dal-client-version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ctrip.platform</groupId>
+            <artifactId>dal-client</artifactId>
+            <version>${dal-client-version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
