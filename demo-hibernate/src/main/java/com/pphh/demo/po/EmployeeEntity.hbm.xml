@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.pphh.demo.po.EmployeeEntity" table="employee" schema="simple_orm">
+        <id name="id">
+            <column name="id" sql-type="bigint(20)"/>
+            <generator class="increment"/>
+        </id>
+        <property name="firstName">
+            <column name="first_name" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="lastName">
+            <column name="last_name" sql-type="varchar(30)" length="30"/>
+        </property>
+        <property name="birthDate">
+            <column name="birth_date" sql-type="date"/>
+        </property>
+        <property name="employed">
+            <column name="employed" sql-type="varchar(3)" length="3"/>
+        </property>
+        <property name="occupation">
+            <column name="occupation" sql-type="varchar(30)" length="30" not-null="true" default="unknown"/>
+        </property>
+        <property name="isActive">
+            <column name="is_active" sql-type="tinyint(1)" default="1"/>
+        </property>
+        <property name="insertTime">
+            <column name="insert_time" sql-type="timestamp"/>
+        </property>
+        <property name="insertBy">
+            <column name="insert_by" sql-type="varchar(64)" length="64" not-null="true" default="unknown"/>
+        </property>
+        <property name="updateTime">
+            <column name="update_time" sql-type="timestamp"/>
+        </property>
+        <property name="updateBy">
+            <column name="update_by" sql-type="varchar(64)" length="64" not-null="true" default="unknown"/>
+        </property>
+    </class>
+</hibernate-mapping>
