@@ -1,66 +1,25 @@
 package com.pphh.demo.po;
 
-import com.ctrip.platform.dal.dao.annotation.Database;
-import com.ctrip.platform.dal.dao.annotation.Type;
-
-import javax.persistence.*;
-import java.sql.Types;
 import java.util.Date;
 
 /**
- * Please add description here.
+ * EmployeeEntity
  *
  * @author huangyinhuang
- * @date 6/21/2018
+ * @date 6/25/2018
  */
-@Database(name = "simple_orm")
-@Table(name = "employee")
 public class EmployeeEntity {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(value = Types.BIGINT)
     private long id;
-
-    @Column(name = "first_name")
-    @Type(value = Types.VARCHAR)
     private String firstName;
-
-    @Column(name = "last_name")
-    @Type(value = Types.VARCHAR)
     private String lastName;
-
-    @Column(name = "birth_date")
-    @Type(value = Types.DATE)
     private Date birthDate;
-
-    @Column(name = "employed")
-    @Type(value = Types.VARCHAR)
     private String employed;
-
-    @Column(name = "occupation")
-    @Type(value = Types.VARCHAR)
     private String occupation;
-
-    @Column(name = "insert_by")
-    @Type(value = Types.VARCHAR)
     private String insertBy;
-
-    @Column(name = "update_by")
-    @Type(value = Types.VARCHAR)
     private String updateBy;
-
-    @Column(name = "insert_time")
-    @Type(value = Types.DATE)
     private Date insertTime;
-
-    @Column(name = "update_time")
-    @Type(value = Types.DATE)
     private Date updateTime;
-
-    @Column(name = "is_active")
-    @Type(value = Types.BIT)
     private Boolean isActive;
 
     public static EmployeeEntity createOne() {
@@ -69,6 +28,10 @@ public class EmployeeEntity {
         newEmployee.setLastName("test_last_name");
         newEmployee.setBirthDate(new Date());
         newEmployee.setEmployed("yes");
+        newEmployee.setOccupation("unknown");
+        newEmployee.setInsertBy("unknown");
+        newEmployee.setUpdateBy("unknown");
+        newEmployee.setIsActive(Boolean.TRUE);
         return newEmployee;
     }
 
@@ -152,11 +115,11 @@ public class EmployeeEntity {
         this.updateTime = updateTime;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 

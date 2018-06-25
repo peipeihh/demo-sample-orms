@@ -13,6 +13,7 @@
         <module>demo-hibernate</module>
         <module>demo-ctrip-dal</module>
         <module>demo-spring-jpa</module>
+        <module>common-orm</module>
     </modules>
 
     <properties>
