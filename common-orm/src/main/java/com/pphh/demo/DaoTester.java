@@ -51,6 +51,20 @@ public class DaoTester {
         logger.info("6) remove the employee created at previous step.");
         rt = employeeDao.delete(newEmployee);
         logger.info("removed: " + rt);
+
+        logger.info("7) add a employee and then remove it by latest record query.");
+        newEmployee = EmployeeEntity.createOne();
+        long latestEmployeeId = employeeDao.insert(newEmployee);
+        EmployeeEntity latestEmployee = employeeDao.selectLast();
+        employeeDao.deleteById(latestEmployee.getId());
+        if (latestEmployeeId != latestEmployee.getId()) {
+            logger.error(String.format("expected latestEmployeeId %s != actual latestEmployeeId %s",
+                    latestEmployeeId,
+                    latestEmployee.getId()));
+        } else {
+            logger.info("expected latestEmployeeId: " + latestEmployeeId);
+            logger.info("actual latestEmployeeId: " + latestEmployee.getId());
+        }
     }
 
 }

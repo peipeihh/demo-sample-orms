@@ -28,6 +28,11 @@ public interface EmployeeDao {
     public List<EmployeeEntity> selectAll();
 
     /**
+     * @return the last employee entity order by id, which has highest id value
+     */
+    public EmployeeEntity selectLast();
+
+    /**
      * query the total count of employees
      *
      * @return total count of employee
@@ -64,6 +69,6 @@ public interface EmployeeDao {
      * @param id id of the employee entity to be removed
      * @return true if success, otherwise false
      */
-    public boolean deleteById(int id);
+    public boolean deleteById(long id);
 
 }

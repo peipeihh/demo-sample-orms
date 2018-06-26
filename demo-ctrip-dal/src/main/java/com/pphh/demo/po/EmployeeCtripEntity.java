@@ -4,8 +4,9 @@ import com.ctrip.platform.dal.dao.annotation.Database;
 import com.ctrip.platform.dal.dao.annotation.Type;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Please add description here.
@@ -21,7 +22,7 @@ public class EmployeeCtripEntity {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(value = Types.BIGINT)
-    private long id;
+    private Long id;
 
     @Column(name = "first_name")
     @Type(value = Types.VARCHAR)
@@ -32,7 +33,7 @@ public class EmployeeCtripEntity {
     private String lastName;
 
     @Column(name = "birth_date")
-    @Type(value = Types.DATE)
+    @Type(value = Types.TIMESTAMP)
     private Date birthDate;
 
     @Column(name = "employed")
@@ -52,22 +53,22 @@ public class EmployeeCtripEntity {
     private String updateBy;
 
     @Column(name = "insert_time")
-    @Type(value = Types.DATE)
-    private Date insertTime;
+    @Type(value = Types.TIMESTAMP)
+    private Timestamp insertTime;
 
     @Column(name = "update_time")
-    @Type(value = Types.DATE)
-    private Date updateTime;
+    @Type(value = Types.TIMESTAMP)
+    private Timestamp updateTime;
 
     @Column(name = "is_active")
     @Type(value = Types.BIT)
     private Boolean isActive;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -127,19 +128,19 @@ public class EmployeeCtripEntity {
         this.updateBy = updateBy;
     }
 
-    public Date getInsertTime() {
+    public Timestamp getInsertTime() {
         return insertTime;
     }
 
-    public void setInsertTime(Date insertTime) {
+    public void setInsertTime(Timestamp insertTime) {
         this.insertTime = insertTime;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

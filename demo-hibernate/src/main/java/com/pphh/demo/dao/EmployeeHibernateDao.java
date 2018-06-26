@@ -77,8 +77,51 @@ public class EmployeeHibernateDao implements EmployeeDao {
     }
 
     @Override
+    public EmployeeEntity selectLast() {
+        EmployeeEntity employee = null;
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            List employeeHibernateList = session.createQuery("FROM EmployeeHibernateEntity ORDER BY id DESC").list();
+            tx.commit();
+            if (employeeHibernateList.size() > 0) {
+                EmployeeHibernateEntity employeeHibernate = (EmployeeHibernateEntity) employeeHibernateList.get(0);
+                employee = ConvertUtils.convert(employeeHibernate, EmployeeEntity.class);
+            }
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            logger.info("A exception happens when executing hibernate sql session.", e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return employee;
+    }
+
+    @Override
     public long count() {
-        return 0;
+        long count = 0;
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            count = (Long) session.createQuery("SELECT count(*) FROM EmployeeHibernateEntity").uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            logger.info("A exception happens when executing hibernate sql session.", e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return count;
     }
 
     @Override
@@ -153,8 +196,27 @@ public class EmployeeHibernateDao implements EmployeeDao {
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return false;
+    public boolean deleteById(long id) {
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+
+        boolean bSuccess = false;
+        try {
+            tx = session.beginTransaction();
+            int result = session.createQuery("DELETE EmployeeHibernateEntity e where e.id= :id").setParameter("id", id).executeUpdate();
+            tx.commit();
+            bSuccess = result > 0;
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            logger.info("A exception happens when executing hibernate sql session.", e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return bSuccess;
     }
 
 }

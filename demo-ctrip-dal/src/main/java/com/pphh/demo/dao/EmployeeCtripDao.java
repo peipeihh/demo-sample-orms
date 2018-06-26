@@ -3,8 +3,11 @@ package com.pphh.demo.dao;
 import com.ctrip.platform.dal.dao.DalHints;
 import com.ctrip.platform.dal.dao.DalRowMapper;
 import com.ctrip.platform.dal.dao.DalTableDao;
+import com.ctrip.platform.dal.dao.StatementParameters;
 import com.ctrip.platform.dal.dao.helper.DalDefaultJpaMapper;
 import com.ctrip.platform.dal.dao.helper.DalDefaultJpaParser;
+import com.ctrip.platform.dal.dao.sqlbuilder.FreeSelectSqlBuilder;
+import com.ctrip.platform.dal.dao.sqlbuilder.FreeUpdateSqlBuilder;
 import com.ctrip.platform.dal.dao.sqlbuilder.SelectSqlBuilder;
 import com.pphh.demo.po.EmployeeCtripEntity;
 import com.pphh.demo.po.EmployeeEntity;
@@ -57,7 +60,43 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
             logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
         }
         return employeeList;
+    }
 
+    @Override
+    public EmployeeEntity selectLast() {
+        SelectSqlBuilder selectCount = new SelectSqlBuilder().select();
+        EmployeeEntity employeeEntity = null;
+        try {
+            FreeSelectSqlBuilder query = new FreeSelectSqlBuilder<EmployeeCtripEntity>();
+            StatementParameters parameters = new StatementParameters();
+            query.with(parameters);
+            query.selectAll().from("employee").orderBy("id", false);
+            query.mapWith(EmployeeCtripEntity.class);
+
+            List l = (List) queryDao.query(query, parameters, DalHints.createIfAbsent(null));
+            if (l.size() > 0) {
+                //EmployeeCtripEntity employeeCtripEntity = (EmployeeCtripEntity) l.get(0);
+                //employeeEntity = ConvertUtils.convert(employeeCtripEntity, EmployeeEntity.class);
+                Long lastEmployeeId = (Long) l.get(0);
+                employeeEntity = this.selectById(lastEmployeeId);
+            }
+        } catch (SQLException e) {
+            logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
+        }
+        return employeeEntity;
+    }
+
+    @Override
+    public long count() {
+        long rt = 0;
+        try {
+            SelectSqlBuilder selectCount = new SelectSqlBuilder().selectCount();
+            Number number = client.count(selectCount, DalHints.createIfAbsent(null));
+            rt = number.longValue();
+        } catch (SQLException e) {
+            logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
+        }
+        return rt;
     }
 
     @Override
@@ -103,7 +142,7 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
     }
 
     @Override
-    public boolean deleteById(int id) {
+    public boolean deleteById(long id) {
         boolean rt = false;
         try {
             DalHints hints = DalHints.createIfAbsent(null);
@@ -117,17 +156,5 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
         return rt;
     }
 
-    @Override
-    public long count() {
-        long rt = 0;
-        try {
-            SelectSqlBuilder selectCount = new SelectSqlBuilder().selectCount();
-            Number number = client.count(selectCount, DalHints.createIfAbsent(null));
-            rt = number.longValue();
-        } catch (SQLException e) {
-            logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
-        }
-        return rt;
-    }
 
 }
