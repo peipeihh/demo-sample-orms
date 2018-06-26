@@ -9,7 +9,7 @@ import com.ctrip.platform.dal.dao.DalQueryDao;
  * @author huangyinhuang
  * @date 6/21/2018
  */
-public class CtripDao {
+public abstract class CtripAbstractDao {
 
     public static final String DATA_BASE = "simple_orm";
     public static final DatabaseCategory dbCategory = DatabaseCategory.MySql;

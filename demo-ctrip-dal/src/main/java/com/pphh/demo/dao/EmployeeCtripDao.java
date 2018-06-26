@@ -21,7 +21,7 @@ import java.util.List;
  * @author huangyinhuang
  * @date 6/21/2018
  */
-public class EmployeeCtripDao extends CtripDao implements EmployeeDao {
+public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
 
     static Logger logger = LoggerFactory.getLogger(EmployeeCtripDao.class);
 

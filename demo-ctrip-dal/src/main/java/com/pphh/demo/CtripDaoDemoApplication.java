@@ -20,29 +20,35 @@ public class CtripDaoDemoApplication {
     static Logger logger = LoggerFactory.getLogger(CtripDaoDemoApplication.class);
 
     public static void main(String[] args) throws SQLException {
-        logger.info("select employee by id");
+        logger.info("start...");
 
-        logger.info("select employee by id");
+        logger.info("1) select employee by id = 1");
         EmployeeCtripDao employeeDao = new EmployeeCtripDao();
         EmployeeEntity employee = employeeDao.selectById(1L);
         DemoUtils.printEmployeeInfo(employee);
 
-        employee.setBirthDate(new Date());
+        logger.info("2) update the employee (id = 1) by setting new birth date");
+        Date newBirthDate = new Date();
+        employee.setBirthDate(newBirthDate);
         boolean rt = employeeDao.update(employee);
-        logger.info("update an employee entity: " + rt);
+        logger.info("updated, new birth date = %s, result = %s", newBirthDate, rt);
 
+        logger.info("3) query the total count of employees");
         long count = employeeDao.count();
         logger.info("count of employee = " + count);
 
+        logger.info("4) add a new employee entity");
         EmployeeEntity newEmployee = EmployeeEntity.createOne();
         int newEmployeeId = employeeDao.insert(newEmployee);
-        logger.info("insert an employee entity: " + newEmployeeId);
+        logger.info("new employee id = " + newEmployeeId);
 
+        logger.info("5) print the whole list of employees");
         List<EmployeeEntity> employees = employeeDao.selectAll();
         DemoUtils.printEmployeeList(employees);
 
+        logger.info("6) remove the employee created at previous step.");
         rt = employeeDao.delete(newEmployee);
-        logger.info("delete an employee entity: " + rt);
+        logger.info("removed: " + rt);
 
         logger.info("the end.");
     }
