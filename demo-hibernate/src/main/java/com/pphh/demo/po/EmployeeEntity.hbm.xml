@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.pphh.demo.po.EmployeeEntity" table="employee" schema="simple_orm">
+    <class name="com.pphh.demo.po.EmployeeHibernateEntity" table="employee" schema="simple_orm">
         <id name="id">
             <column name="id" sql-type="bigint(20)"/>
             <generator class="increment"/>

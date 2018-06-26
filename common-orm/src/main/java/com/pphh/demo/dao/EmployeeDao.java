@@ -40,7 +40,7 @@ public interface EmployeeDao {
      * @param employee a employee entity to be inserted
      * @return the id of new employee entity
      */
-    public int insert(EmployeeEntity employee);
+    public long insert(EmployeeEntity employee);
 
     /**
      * update an employee entity
