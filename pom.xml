@@ -14,6 +14,7 @@
         <module>demo-ctrip-dal</module>
         <module>demo-spring-jpa</module>
         <module>common-orm</module>
+        <module>demo-spring-boot-jooq</module>
     </modules>
 
     <properties>
