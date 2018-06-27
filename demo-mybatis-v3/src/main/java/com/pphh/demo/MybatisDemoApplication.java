@@ -2,14 +2,15 @@ package com.pphh.demo;
 
 
 import com.pphh.demo.dynamic.dao.EmployeeMybatisDynamicDao;
-//import com.pphh.demo.dynamic.po.SimpleTableRecord;
+import com.pphh.demo.po.EmployeeEntity;
 import com.pphh.demo.po.LastName;
+import com.pphh.demo.util.DemoUtils;
 import com.pphh.demo.xml.dao.EmployeeMybatisDao;
 import com.pphh.demo.po.EmployeeMybatisEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class MybatisDemoApplication {
     static Logger logger = LoggerFactory.getLogger(MybatisDemoApplication.class);
 
     public static void main(String[] args) {
-        logger.info("hello,world");
+        logger.info("start...");
 
         EmployeeMybatisDynamicDao mybatisDao = new EmployeeMybatisDynamicDao();
         List<EmployeeMybatisEntity> records1 = mybatisDao.readCount();
@@ -35,29 +36,11 @@ public class MybatisDemoApplication {
         List<EmployeeMybatisEntity> records3 = mybatisDao.readAll();
         printUserRecord(records3);
 
-
         EmployeeMybatisDao employeeDao = new EmployeeMybatisDao();
-        EmployeeMybatisEntity employee = employeeDao.getById(1L);
-        printEmployeeInfo(employee);
+        DaoTester daoTester = DaoTester.getInstance();
+        daoTester.run(employeeDao);
 
-        employeeDao.update(employee);
-
-        List<EmployeeMybatisEntity> employees = employeeDao.readAll();
-        printUserRecord(employees);
-
-        EmployeeMybatisEntity newEmployee = new EmployeeMybatisEntity();
-        newEmployee.setFirstName("test");
-        newEmployee.setLastName(LastName.of("test"));
-        newEmployee.setBirthDate(new Date());
-        newEmployee.setEmployed(Boolean.TRUE);
-        employeeDao.insert(employee);
-
-        long id = employee.getId();
-        employeeDao.delete(id);
-
-        int total = employeeDao.count();
-        logger.info("total = " + total);
-
+        logger.info("the end.");
     }
 
     public static void printUserRecord(List<EmployeeMybatisEntity> records) {

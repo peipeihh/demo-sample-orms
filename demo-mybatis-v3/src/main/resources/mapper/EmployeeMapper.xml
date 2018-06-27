@@ -29,6 +29,12 @@
         from employee where is_active = 1
     </select>
 
+    <select id="selectLast" resultType="com.pphh.demo.po.EmployeeMybatisEntity">
+        select
+        <include refid="columns"/>
+        from employee where is_active = 1 order by id desc limit 1
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.pphh.demo.po.EmployeeMybatisEntity">
         insert into employee(first_name, last_name, birth_date, employed, occupation)
         values(#{firstName},#{lastName},#{birthDate},#{employed},#{occupation})

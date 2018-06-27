@@ -1,16 +1,17 @@
 package com.pphh.demo.po;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
- * EmployeeEntity
+ * EmployeeMybatisEntity
  *
  * @author huangyinhuang
  * @date 6/20/2018
  */
 public class EmployeeMybatisEntity {
 
-    private long id;
+    private Long id;
     private String firstName;
     private LastName lastName;
     private Date birthDate;
@@ -18,8 +19,8 @@ public class EmployeeMybatisEntity {
     private String occupation;
     private String insertBy;
     private String updateBy;
-    private Date insertTime;
-    private Date updateTime;
+    private Timestamp insertTime;
+    private Timestamp updateTime;
     private Boolean isActive;
 
     public long getId() {
@@ -86,19 +87,19 @@ public class EmployeeMybatisEntity {
         this.updateBy = updateBy;
     }
 
-    public Date getInsertTime() {
+    public Timestamp getInsertTime() {
         return insertTime;
     }
 
-    public void setInsertTime(Date insertTime) {
+    public void setInsertTime(Timestamp insertTime) {
         this.insertTime = insertTime;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -109,4 +110,5 @@ public class EmployeeMybatisEntity {
     public void setActive(Boolean active) {
         isActive = active;
     }
+
 }

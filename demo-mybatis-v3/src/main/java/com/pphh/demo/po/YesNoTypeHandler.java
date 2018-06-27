@@ -16,23 +16,26 @@ import java.sql.SQLException;
  */
 public class YesNoTypeHandler implements TypeHandler<Boolean> {
 
+    public static String YesType = "Yes";
+    public static String NoType = "No";
+
     @Override
     public void setParameter(PreparedStatement ps, int i, Boolean parameter, JdbcType jdbcType) throws SQLException {
-        ps.setString(i, parameter ? "Yes" : "No");
+        ps.setString(i, parameter ? YesType : NoType);
     }
 
     @Override
     public Boolean getResult(ResultSet rs, String columnName) throws SQLException {
-        return "Yes".equals(rs.getString(columnName));
+        return YesType.equals(rs.getString(columnName));
     }
 
     @Override
     public Boolean getResult(ResultSet rs, int columnIndex) throws SQLException {
-        return "Yes".equals(rs.getString(columnIndex));
+        return YesType.equals(rs.getString(columnIndex));
     }
 
     @Override
     public Boolean getResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return "Yes".equals(cs.getString(columnIndex));
+        return YesType.equals(cs.getString(columnIndex));
     }
 }

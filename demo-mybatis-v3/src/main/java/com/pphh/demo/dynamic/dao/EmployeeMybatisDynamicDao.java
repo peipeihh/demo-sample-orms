@@ -22,7 +22,7 @@ import static com.pphh.demo.dynamic.mapper.EmployeeTableDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 /**
- * EmployeeDynamicDao
+ * EmployeeMybatisDynamicDao
  *
  * @author huangyinhuang
  * @date 6/15/2018

@@ -17,6 +17,8 @@ public interface EmployeeMapper {
 
     List<EmployeeMybatisEntity> selectAll();
 
+    EmployeeMybatisEntity selectLast();
+
     int insert(EmployeeMybatisEntity employee);
 
     void update(EmployeeMybatisEntity employee);
