@@ -1,6 +1,6 @@
 package com.pphh.demo.xml.mapper;
 
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.EmployeeMybatisEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface EmployeeMapper {
 
-    EmployeeEntity selectById(@Param("id") long id);
+    EmployeeMybatisEntity selectById(@Param("id") long id);
 
-    List<EmployeeEntity> selectAll();
+    List<EmployeeMybatisEntity> selectAll();
 
-    int insert(EmployeeEntity employee);
+    int insert(EmployeeMybatisEntity employee);
 
-    void update(EmployeeEntity employee);
+    void update(EmployeeMybatisEntity employee);
 
     void delete(@Param("id") long id);
 

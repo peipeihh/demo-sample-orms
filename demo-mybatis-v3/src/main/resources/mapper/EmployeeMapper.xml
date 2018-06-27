@@ -17,24 +17,24 @@
         update_time as updateTime
     </sql>
 
-    <select id="selectById" resultType="com.pphh.demo.po.EmployeeEntity">
+    <select id="selectById" resultType="com.pphh.demo.po.EmployeeMybatisEntity">
         select
         <include refid="columns"/>
         from employee where id = #{id}
     </select>
 
-    <select id="selectAll" resultType="com.pphh.demo.po.EmployeeEntity">
+    <select id="selectAll" resultType="com.pphh.demo.po.EmployeeMybatisEntity">
         select
         <include refid="columns"/>
         from employee where is_active = 1
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.pphh.demo.po.EmployeeEntity">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.pphh.demo.po.EmployeeMybatisEntity">
         insert into employee(first_name, last_name, birth_date, employed, occupation)
         values(#{firstName},#{lastName},#{birthDate},#{employed},#{occupation})
     </insert>
 
-    <update id="update" parameterType="com.pphh.demo.po.EmployeeEntity">
+    <update id="update" parameterType="com.pphh.demo.po.EmployeeMybatisEntity">
         update
         employee
         set
@@ -48,7 +48,7 @@
         id = #{id}
     </update>
 
-    <update id="delete" parameterType="com.pphh.demo.po.EmployeeEntity">
+    <update id="delete" parameterType="com.pphh.demo.po.EmployeeMybatisEntity">
         update
         employee
         set

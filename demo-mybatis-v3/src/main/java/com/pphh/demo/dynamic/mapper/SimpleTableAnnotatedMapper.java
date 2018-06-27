@@ -1,6 +1,6 @@
 package com.pphh.demo.dynamic.mapper;
 
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.EmployeeMybatisEntity;
 import com.pphh.demo.po.LastNameTypeHandler;
 import com.pphh.demo.po.YesNoTypeHandler;
 import org.apache.ibatis.annotations.*;
@@ -28,7 +28,7 @@ import static com.pphh.demo.dynamic.mapper.EmployeeTableDynamicSqlSupport.*;
 public interface SimpleTableAnnotatedMapper {
 
     @InsertProvider(type = SqlProviderAdapter.class, method = "insert")
-    int insert(InsertStatementProvider<EmployeeEntity> insertStatement);
+    int insert(InsertStatementProvider<EmployeeMybatisEntity> insertStatement);
 
     @DeleteProvider(type = SqlProviderAdapter.class, method = "delete")
     int delete(DeleteStatementProvider deleteStatement);
@@ -41,7 +41,7 @@ public interface SimpleTableAnnotatedMapper {
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     @ResultMap("SimpleTableResult")
-    EmployeeEntity selectOne(SelectStatementProvider selectStatement);
+    EmployeeMybatisEntity selectOne(SelectStatementProvider selectStatement);
 
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     @Results(id = "SimpleTableResult", value = {
@@ -57,9 +57,9 @@ public interface SimpleTableAnnotatedMapper {
             @Result(column = "update_time", property = "updateTime", jdbcType = JdbcType.TIMESTAMP),
             @Result(column = "is_active", property = "isActive", jdbcType = JdbcType.BOOLEAN)
     })
-    List<EmployeeEntity> selectMany(SelectStatementProvider selectStatement);
+    List<EmployeeMybatisEntity> selectMany(SelectStatementProvider selectStatement);
 
-    default QueryExpressionDSL<MyBatis3SelectModelAdapter<List<EmployeeEntity>>> selectByExample() {
+    default QueryExpressionDSL<MyBatis3SelectModelAdapter<List<EmployeeMybatisEntity>>> selectByExample() {
         return SelectDSL.selectWithMapper(this::selectMany, id.as("A_ID"), firstName, lastName, birthDate, employed, occupation)
                 .from(EMPLOYEE_TABLE);
     }

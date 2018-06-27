@@ -1,7 +1,7 @@
 package com.pphh.demo.dynamic.dao;
 
 import com.pphh.demo.dynamic.mapper.SimpleTableAnnotatedMapper;
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.EmployeeMybatisEntity;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -27,16 +27,16 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
  * @author huangyinhuang
  * @date 6/15/2018
  */
-public class EmployeeDynamicDao {
+public class EmployeeMybatisDynamicDao {
     public static final EmployeeTable EMPLOYEE_TABLE = new EmployeeTable();
     static String DATASOURCE_DRIVER = "datasource.driver-class-name";
     static String DATASOURCE_URL = "datasource.url";
     static String DATASOURCE_USER_NAME = "datasource.username";
     static String DATASOURCE_USER_PASSWORD = "datasource.password";
-    static Logger logger = LoggerFactory.getLogger(EmployeeDynamicDao.class);
+    static Logger logger = LoggerFactory.getLogger(EmployeeMybatisDynamicDao.class);
     private SqlSessionFactory sqlSessionFactory;
 
-    public EmployeeDynamicDao() {
+    public EmployeeMybatisDynamicDao() {
         ResourceBundle resource = ResourceBundle.getBundle("application");
         UnpooledDataSource ds = new UnpooledDataSource(
                 resource.getString(DATASOURCE_DRIVER),
@@ -49,8 +49,8 @@ public class EmployeeDynamicDao {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
     }
 
-    public List<EmployeeEntity> readUserIdOne() {
-        List<EmployeeEntity> rows = null;
+    public List<EmployeeMybatisEntity> readUserIdOne() {
+        List<EmployeeMybatisEntity> rows = null;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
@@ -70,8 +70,8 @@ public class EmployeeDynamicDao {
 
     }
 
-    public List<EmployeeEntity> readAll() {
-        List<EmployeeEntity> rows = null;
+    public List<EmployeeMybatisEntity> readAll() {
+        List<EmployeeMybatisEntity> rows = null;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
@@ -96,8 +96,8 @@ public class EmployeeDynamicDao {
 
     }
 
-    public List<EmployeeEntity> readCount() {
-        List<EmployeeEntity> rows = null;
+    public List<EmployeeMybatisEntity> readCount() {
+        List<EmployeeMybatisEntity> rows = null;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {

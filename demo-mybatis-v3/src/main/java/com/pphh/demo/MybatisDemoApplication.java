@@ -1,11 +1,11 @@
 package com.pphh.demo;
 
 
-import com.pphh.demo.dynamic.dao.EmployeeDynamicDao;
+import com.pphh.demo.dynamic.dao.EmployeeMybatisDynamicDao;
 //import com.pphh.demo.dynamic.po.SimpleTableRecord;
 import com.pphh.demo.po.LastName;
-import com.pphh.demo.xml.dao.EmployeeDao;
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.xml.dao.EmployeeMybatisDao;
+import com.pphh.demo.po.EmployeeMybatisEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,34 +18,34 @@ import java.util.List;
  * @author huangyinhuang
  * @date 6/15/2018
  */
-public class Main {
+public class MybatisDemoApplication {
 
-    static Logger logger = LoggerFactory.getLogger(Main.class);
+    static Logger logger = LoggerFactory.getLogger(MybatisDemoApplication.class);
 
     public static void main(String[] args) {
         logger.info("hello,world");
 
-        EmployeeDynamicDao mybatisDao = new EmployeeDynamicDao();
-        List<EmployeeEntity> records1 = mybatisDao.readCount();
+        EmployeeMybatisDynamicDao mybatisDao = new EmployeeMybatisDynamicDao();
+        List<EmployeeMybatisEntity> records1 = mybatisDao.readCount();
         logger.info("count = " + records1.size());
 
-        List<EmployeeEntity> records2 = mybatisDao.readUserIdOne();
+        List<EmployeeMybatisEntity> records2 = mybatisDao.readUserIdOne();
         printUserRecord(records2);
 
-        List<EmployeeEntity> records3 = mybatisDao.readAll();
+        List<EmployeeMybatisEntity> records3 = mybatisDao.readAll();
         printUserRecord(records3);
 
 
-        EmployeeDao employeeDao = new EmployeeDao();
-        EmployeeEntity employee = employeeDao.getById(1L);
+        EmployeeMybatisDao employeeDao = new EmployeeMybatisDao();
+        EmployeeMybatisEntity employee = employeeDao.getById(1L);
         printEmployeeInfo(employee);
 
         employeeDao.update(employee);
 
-        List<EmployeeEntity> employees = employeeDao.readAll();
+        List<EmployeeMybatisEntity> employees = employeeDao.readAll();
         printUserRecord(employees);
 
-        EmployeeEntity newEmployee = new EmployeeEntity();
+        EmployeeMybatisEntity newEmployee = new EmployeeMybatisEntity();
         newEmployee.setFirstName("test");
         newEmployee.setLastName(LastName.of("test"));
         newEmployee.setBirthDate(new Date());
@@ -60,7 +60,7 @@ public class Main {
 
     }
 
-    public static void printUserRecord(List<EmployeeEntity> records) {
+    public static void printUserRecord(List<EmployeeMybatisEntity> records) {
         if (records != null) {
             for (int i = 0; i < records.size(); i++) {
                 if (i == 0) {
@@ -72,7 +72,7 @@ public class Main {
         }
     }
 
-    public static void printEmployeeInfo(EmployeeEntity employee) {
+    public static void printEmployeeInfo(EmployeeMybatisEntity employee) {
 
         if (employee != null) {
 

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author huangyinhuang
  * @date 6/20/2018
  */
-public class EmployeeEntity {
+public class EmployeeMybatisEntity {
 
     private long id;
     private String firstName;

@@ -1,7 +1,7 @@
 package com.pphh.demo.xml.dao;
 
 import com.pphh.demo.xml.mapper.EmployeeMapper;
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.EmployeeMybatisEntity;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,12 +19,12 @@ import java.util.List;
  * @author huangyinhuang
  * @date 6/20/2018
  */
-public class EmployeeDao {
+public class EmployeeMybatisDao {
 
-    static Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
+    static Logger logger = LoggerFactory.getLogger(EmployeeMybatisDao.class);
     private SqlSessionFactory sqlSessionFactory;
 
-    public EmployeeDao() {
+    public EmployeeMybatisDao() {
         try {
             String MYBATIS_CONFIG_XML = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(MYBATIS_CONFIG_XML);
@@ -34,8 +34,8 @@ public class EmployeeDao {
         }
     }
 
-    public EmployeeEntity getById(long id) {
-        EmployeeEntity employee = null;
+    public EmployeeMybatisEntity getById(long id) {
+        EmployeeMybatisEntity employee = null;
 
         if (sqlSessionFactory != null) {
             SqlSession session = sqlSessionFactory.openSession(true);
@@ -52,8 +52,8 @@ public class EmployeeDao {
         return employee;
     }
 
-    public List<EmployeeEntity> readAll() {
-        List<EmployeeEntity> employees = null;
+    public List<EmployeeMybatisEntity> readAll() {
+        List<EmployeeMybatisEntity> employees = null;
 
         if (sqlSessionFactory != null) {
             SqlSession session = sqlSessionFactory.openSession(true);
@@ -70,7 +70,7 @@ public class EmployeeDao {
         return employees;
     }
 
-    public boolean insert(EmployeeEntity newEmployee) {
+    public boolean insert(EmployeeMybatisEntity newEmployee) {
         boolean bSuccess = false;
 
         if (sqlSessionFactory != null) {
@@ -88,7 +88,7 @@ public class EmployeeDao {
         return bSuccess;
     }
 
-    public void update(EmployeeEntity newEmployee) {
+    public void update(EmployeeMybatisEntity newEmployee) {
 
         if (sqlSessionFactory != null) {
             SqlSession session = sqlSessionFactory.openSession(true);

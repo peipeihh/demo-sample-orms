@@ -22,8 +22,10 @@ CREATE TABLE IF NOT EXISTS `simple_orm`.`employee` (
   DEFAULT CHARSET = utf8
   COMMENT = 'employee';
 
-INSERT INTO `simple_orm`.`employee` (`first_name`, `last_name`, `birth_date`, `employed`, `occupation`)
-VALUES ('michael', 'huang', '2018-06-16', 'yes', 'developer'),
+INSERT INTO `simple_orm`.`employee`
+  (`first_name`, `last_name`, `birth_date`, `employed`, `occupation`)
+VALUES
+  ('michael', 'huang', '2018-06-16', 'yes', 'developer'),
   ('jelen', 'hu', '2018-06-16', 'no', 'manager'),
   ('jacky', 'chen', '2018-06-16', 'no', 'sales'),
   ('tom', 'li', '2018-06-16', 'no', 'ceo');
