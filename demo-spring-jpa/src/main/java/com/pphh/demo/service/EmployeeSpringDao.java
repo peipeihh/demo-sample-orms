@@ -1,7 +1,7 @@
 package com.pphh.demo.service;
 
-import com.pphh.demo.dao.EmployeeRepository;
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.repo.EmployeeRepository;
+import com.pphh.demo.po.EmployeeJpaEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +22,24 @@ import java.util.List;
  * @date 6/24/2018
  */
 @Service
-public class EmployeeService {
+public class EmployeeSpringDao {
 
-    static Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+    static Logger logger = LoggerFactory.getLogger(EmployeeSpringDao.class);
 
     @Autowired
     EmployeeRepository employeeDao;
 
-    public EmployeeEntity queryById(Long id) {
-        EmployeeEntity employee = employeeDao.findOne(id);
+    public EmployeeJpaEntity queryById(Long id) {
+        EmployeeJpaEntity employee = employeeDao.findOne(id);
         printEmployeeInfo(employee);
         return employee;
     }
 
-    public Page<EmployeeEntity> queryByPage(String field, String value, int page, int count) {
+    public Page<EmployeeJpaEntity> queryByPage(String field, String value, int page, int count) {
 
-        Specification<EmployeeEntity> specification = new Specification<EmployeeEntity>() {
+        Specification<EmployeeJpaEntity> specification = new Specification<EmployeeJpaEntity>() {
             @Override
-            public Predicate toPredicate(Root<EmployeeEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<EmployeeJpaEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 
                 Path<String> _name = root.get(field);
                 Predicate _key = criteriaBuilder.like(_name, "%" + value + "%");
@@ -54,7 +54,7 @@ public class EmployeeService {
         return employeeDao.findAll(specification, pageable);
     }
 
-    private void printEmployeeList(List<EmployeeEntity> employees) {
+    private void printEmployeeList(List<EmployeeJpaEntity> employees) {
         if (employees != null) {
             for (int i = 0; i < employees.size(); i++) {
                 if (i == 0) {
@@ -66,7 +66,7 @@ public class EmployeeService {
         }
     }
 
-    private void printEmployeeInfo(EmployeeEntity employee) {
+    private void printEmployeeInfo(EmployeeJpaEntity employee) {
 
         if (employee != null) {
             String msg = String.format("%s - %s, %s, %s, %s, %s, %s, %s, %s, %s",

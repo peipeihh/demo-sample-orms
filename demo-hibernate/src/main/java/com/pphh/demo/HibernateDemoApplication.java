@@ -1,14 +1,8 @@
 package com.pphh.demo;
 
 import com.pphh.demo.dao.EmployeeHibernateDao;
-import com.pphh.demo.po.EmployeeEntity;
-import com.pphh.demo.po.EmployeeHibernateEntity;
-import com.pphh.demo.util.DemoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.Date;
-import java.util.List;
 
 /**
  * Please add description here.

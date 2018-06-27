@@ -1,6 +1,6 @@
-package com.pphh.demo.dao;
+package com.pphh.demo.repo;
 
-import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.EmployeeJpaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,11 +14,11 @@ import org.springframework.data.jpa.repository.Query;
  * @author huangyinhuang
  * @date 6/24/2018
  */
-public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long>, JpaSpecificationExecutor<EmployeeEntity> {
+public interface EmployeeRepository extends JpaRepository<EmployeeJpaEntity, Long>, JpaSpecificationExecutor<EmployeeJpaEntity> {
 
-    @Query("SELECT e FROM EmployeeEntity e WHERE e.isActive=true AND e.id=?1")
-    EmployeeEntity findOne(Long id);
+    @Query("SELECT e FROM EmployeeJpaEntity e WHERE e.isActive=true AND e.id=?1")
+    EmployeeJpaEntity findOne(Long id);
 
-    Page<EmployeeEntity> findAll(Specification<EmployeeEntity> specification, Pageable pageable);
+    Page<EmployeeJpaEntity> findAll(Specification<EmployeeJpaEntity> specification, Pageable pageable);
 
 }

@@ -12,11 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 6/24/2018
  */
 @SpringBootApplication
-public class Application {
+public class SpringJpaDemoApplication {
 
-    static Logger logger = LoggerFactory.getLogger(Application.class);
+    static Logger logger = LoggerFactory.getLogger(SpringJpaDemoApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SpringJpaDemoApplication.class, args);
     }
 }

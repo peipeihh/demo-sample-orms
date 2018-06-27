@@ -2,7 +2,7 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="persistenceUnit">
-        <class>com.pphh.demo.po.EmployeeEntity</class>
+        <class>com.pphh.demo.po.EmployeeJpaEntity</class>
         <properties>
             <!--<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
             <!--<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/simple_orm?useUnicode=true&characterEncoding=utf-8&useSSL=false"/>-->

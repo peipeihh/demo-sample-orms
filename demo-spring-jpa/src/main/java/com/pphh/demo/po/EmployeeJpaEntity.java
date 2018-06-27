@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "employee", schema = "simple_orm", catalog = "")
-public class EmployeeEntity {
+public class EmployeeJpaEntity {
     private Long id;
     private String firstName;
     private String lastName;
@@ -140,7 +140,7 @@ public class EmployeeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EmployeeEntity that = (EmployeeEntity) o;
+        EmployeeJpaEntity that = (EmployeeJpaEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;

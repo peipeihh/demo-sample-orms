@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @date 6/24/2018
  */
 @Configuration
-@EnableJpaRepositories("com.pphh.demo.dao")
+@EnableJpaRepositories("com.pphh.demo.repo")
 public class JpaConfiguration {
 }
