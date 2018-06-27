@@ -1,9 +1,8 @@
 package com.pphh.demo.xml.dao;
 
+import com.pphh.demo.EmployeeConverter;
 import com.pphh.demo.dao.EmployeeDao;
 import com.pphh.demo.po.EmployeeEntity;
-import com.pphh.demo.po.LastName;
-import com.pphh.demo.po.YesNoTypeHandler;
 import com.pphh.demo.util.ConvertUtils;
 import com.pphh.demo.xml.mapper.EmployeeMapper;
 import com.pphh.demo.po.EmployeeMybatisEntity;
@@ -39,115 +38,6 @@ public class EmployeeMybatisDao implements EmployeeDao {
         }
     }
 
-    public static EmployeeEntity converter(EmployeeMybatisEntity mybatisEntity) {
-        EmployeeEntity employee = ConvertUtils.convert(mybatisEntity, EmployeeEntity.class);
-        employee.setId(mybatisEntity.getId());
-        if (mybatisEntity.getLastName() != null) {
-            employee.setLastName(mybatisEntity.getLastName().getName());
-        }
-        if (mybatisEntity.getEmployed() != null) {
-            employee.setEmployed(mybatisEntity.getEmployed() ? YesNoTypeHandler.YesType : YesNoTypeHandler.NoType);
-        }
-        return employee;
-    }
-
-    public static EmployeeMybatisEntity converter(EmployeeEntity employee) {
-        EmployeeMybatisEntity mybatisEntity = ConvertUtils.convert(employee, EmployeeMybatisEntity.class);
-        if (employee.getLastName() != null) {
-            mybatisEntity.setLastName(LastName.of(employee.getLastName()));
-        }
-        if (employee.getEmployed() != null) {
-            mybatisEntity.setEmployed(employee.getEmployed().equals(YesNoTypeHandler.YesType));
-        }
-        return mybatisEntity;
-    }
-
-//    public EmployeeMybatisEntity getById(long id) {
-//        EmployeeMybatisEntity employee = null;
-//
-//        if (sqlSessionFactory != null) {
-//            SqlSession session = sqlSessionFactory.openSession(true);
-//            try {
-//                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
-//                employee = imageMapper.selectById(id);
-//            } catch (Exception e) {
-//                logger.error(e.getMessage(), e);
-//            } finally {
-//                session.close();
-//            }
-//        }
-//
-//        return employee;
-//    }
-
-//    public List<EmployeeMybatisEntity> readAll() {
-//        List<EmployeeMybatisEntity> employees = null;
-//
-//        if (sqlSessionFactory != null) {
-//            SqlSession session = sqlSessionFactory.openSession(true);
-//            try {
-//                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
-//                employees = imageMapper.selectAll();
-//            } catch (Exception e) {
-//                logger.error(e.getMessage(), e);
-//            } finally {
-//                session.close();
-//            }
-//        }
-//
-//        return employees;
-//    }
-
-//    public boolean insert(EmployeeMybatisEntity newEmployee) {
-//        boolean bSuccess = false;
-//
-//        if (sqlSessionFactory != null) {
-//            SqlSession session = sqlSessionFactory.openSession(true);
-//            try {
-//                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
-//                bSuccess = imageMapper.insert(newEmployee) != 0;
-//            } catch (Exception e) {
-//                logger.error(e.getMessage(), e);
-//            } finally {
-//                session.close();
-//            }
-//        }
-//
-//        return bSuccess;
-//    }
-
-//    public void update(EmployeeMybatisEntity newEmployee) {
-//
-//        if (sqlSessionFactory != null) {
-//            SqlSession session = sqlSessionFactory.openSession(true);
-//            try {
-//                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
-//                imageMapper.update(newEmployee);
-//            } catch (Exception e) {
-//                logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
-//            } finally {
-//                session.close();
-//            }
-//        }
-//
-//    }
-
-//    public void delete(long id) {
-//
-//        if (sqlSessionFactory != null) {
-//            SqlSession session = sqlSessionFactory.openSession(true);
-//            try {
-//                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
-//                imageMapper.delete(id);
-//            } catch (Exception e) {
-//                logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
-//            } finally {
-//                session.close();
-//            }
-//        }
-//
-//    }
-
     @Override
     public EmployeeEntity selectById(long id) {
         EmployeeEntity employee = null;
@@ -157,7 +47,7 @@ public class EmployeeMybatisDao implements EmployeeDao {
             try {
                 EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
                 EmployeeMybatisEntity mybatisEmployee = imageMapper.selectById(id);
-                employee = EmployeeMybatisDao.converter(mybatisEmployee);
+                employee = EmployeeConverter.convert(mybatisEmployee);
             } catch (Exception e) {
                 logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
             } finally {
@@ -177,7 +67,7 @@ public class EmployeeMybatisDao implements EmployeeDao {
             try {
                 EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
                 List<EmployeeMybatisEntity> mybatisEmployees = imageMapper.selectAll();
-                employees = ConvertUtils.convert(mybatisEmployees, EmployeeMybatisDao::converter);
+                employees = ConvertUtils.convert(mybatisEmployees, EmployeeConverter::convert);
             } catch (Exception e) {
                 logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
             } finally {
@@ -197,7 +87,7 @@ public class EmployeeMybatisDao implements EmployeeDao {
             try {
                 EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
                 EmployeeMybatisEntity mybatisEntity = imageMapper.selectLast();
-                employee = EmployeeMybatisDao.converter(mybatisEntity);
+                employee = EmployeeConverter.convert(mybatisEntity);
             } catch (Exception e) {
                 logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
             } finally {
@@ -234,7 +124,7 @@ public class EmployeeMybatisDao implements EmployeeDao {
         if (sqlSessionFactory != null) {
             SqlSession session = sqlSessionFactory.openSession(true);
             try {
-                EmployeeMybatisEntity mybatisEntity = converter(employee);
+                EmployeeMybatisEntity mybatisEntity = EmployeeConverter.convert(employee);
                 EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
                 int rt = imageMapper.insert(mybatisEntity);
                 if (rt > 0) {
@@ -258,7 +148,7 @@ public class EmployeeMybatisDao implements EmployeeDao {
         if (sqlSessionFactory != null) {
             SqlSession session = sqlSessionFactory.openSession(true);
             try {
-                EmployeeMybatisEntity mybatisEntity = converter(employee);
+                EmployeeMybatisEntity mybatisEntity = EmployeeConverter.convert(employee);
                 EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
                 imageMapper.update(mybatisEntity);
                 bSuccess = true;

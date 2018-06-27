@@ -1,7 +1,11 @@
 package com.pphh.demo.dynamic.dao;
 
+import com.pphh.demo.EmployeeConverter;
+import com.pphh.demo.dao.EmployeeDao;
 import com.pphh.demo.dynamic.mapper.SimpleTableAnnotatedMapper;
+import com.pphh.demo.po.EmployeeEntity;
 import com.pphh.demo.po.EmployeeMybatisEntity;
+import com.pphh.demo.util.ConvertUtils;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -9,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.render.RenderingStrategy;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import org.slf4j.Logger;
@@ -17,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.pphh.demo.dynamic.mapper.EmployeeTableDynamicSqlSupport.id;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 import static com.pphh.demo.dynamic.mapper.EmployeeTableDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
@@ -27,7 +33,7 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
  * @author huangyinhuang
  * @date 6/15/2018
  */
-public class EmployeeMybatisDynamicDao {
+public class EmployeeMybatisDynamicDao implements EmployeeDao {
     public static final EmployeeTable EMPLOYEE_TABLE = new EmployeeTable();
     static String DATASOURCE_DRIVER = "datasource.driver-class-name";
     static String DATASOURCE_URL = "datasource.url";
@@ -49,29 +55,34 @@ public class EmployeeMybatisDynamicDao {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
     }
 
-    public List<EmployeeMybatisEntity> readUserIdOne() {
-        List<EmployeeMybatisEntity> rows = null;
+    @Override
+    public EmployeeEntity selectById(long employeeId) {
+        EmployeeEntity employee = null;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             SimpleTableAnnotatedMapper mapper = sqlSession.getMapper(SimpleTableAnnotatedMapper.class);
 
-            rows = mapper.selectByExample()
-                    .where(id, isEqualTo(1L))
+            List<EmployeeMybatisEntity> rows = mapper.selectByExample()
+                    .where(id, isEqualTo(employeeId))
                     .or(occupation, isNull())
                     .build()
                     .execute();
+            if (rows.size() > 0) {
+                EmployeeMybatisEntity mybatisEntity = rows.get(0);
+                employee = EmployeeConverter.convert(mybatisEntity);
+            }
 
         } finally {
             sqlSession.close();
         }
 
-        return rows;
-
+        return employee;
     }
 
-    public List<EmployeeMybatisEntity> readAll() {
-        List<EmployeeMybatisEntity> rows = null;
+    @Override
+    public List<EmployeeEntity> selectAll() {
+        List<EmployeeEntity> employees = null;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
@@ -83,41 +94,60 @@ public class EmployeeMybatisDynamicDao {
 //                    .where(id, isEqualTo(1L))
                     .build()
                     .render(RenderingStrategy.MYBATIS3);
-
             logger.info("sql statement: " + selectStatement.getSelectStatement());
-
-            rows = mapper.selectMany(selectStatement);
-
+            List<EmployeeMybatisEntity> rows = mapper.selectMany(selectStatement);
+            employees = ConvertUtils.convert(rows, EmployeeConverter::convert);
         } finally {
             sqlSession.close();
         }
 
-        return rows;
-
+        return employees;
     }
 
-    public List<EmployeeMybatisEntity> readCount() {
-        List<EmployeeMybatisEntity> rows = null;
+    @Override
+    public EmployeeEntity selectLast() {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        long count = 0;
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             SimpleTableAnnotatedMapper mapper = sqlSession.getMapper(SimpleTableAnnotatedMapper.class);
-
-            SelectStatementProvider selectStatement = select(count())
+            SelectStatementProvider selectStatement = select(SqlBuilder.count())
                     .from(EMPLOYEE_TABLE)
                     .build()
                     .render(RenderingStrategy.MYBATIS3);
 
             logger.info("sql statement: " + selectStatement.getSelectStatement());
-
-            rows = mapper.selectMany(selectStatement);
-
+            List<EmployeeMybatisEntity> rows = mapper.selectMany(selectStatement);
+            count = rows.size();
         } finally {
             sqlSession.close();
         }
 
-        return rows;
-
+        return count;
     }
 
+    @Override
+    public long insert(EmployeeEntity employee) {
+        return 0;
+    }
+
+    @Override
+    public boolean update(EmployeeEntity employee) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(EmployeeEntity employee) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        return false;
+    }
 }
