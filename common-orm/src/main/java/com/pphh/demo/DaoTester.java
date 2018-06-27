@@ -24,7 +24,7 @@ public class DaoTester {
         return ourInstance;
     }
 
-    void run(EmployeeDao employeeDao) {
+    public void run(EmployeeDao employeeDao) {
         logger.info("1) select employee by id = 1");
         EmployeeEntity employee = employeeDao.selectById(1L);
         DemoUtils.printEmployeeInfo(employee);

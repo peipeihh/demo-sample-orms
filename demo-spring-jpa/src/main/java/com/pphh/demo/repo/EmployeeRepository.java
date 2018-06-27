@@ -21,4 +21,8 @@ public interface EmployeeRepository extends JpaRepository<EmployeeJpaEntity, Lon
 
     Page<EmployeeJpaEntity> findAll(Specification<EmployeeJpaEntity> specification, Pageable pageable);
 
+    EmployeeJpaEntity findFirstByOrderByIdAsc();
+
+    EmployeeJpaEntity findTopByOrderByIdDesc();
+
 }

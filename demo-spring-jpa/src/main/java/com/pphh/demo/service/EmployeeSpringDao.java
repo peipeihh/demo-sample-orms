@@ -1,7 +1,10 @@
 package com.pphh.demo.service;
 
+import com.pphh.demo.dao.EmployeeDao;
+import com.pphh.demo.po.EmployeeEntity;
 import com.pphh.demo.repo.EmployeeRepository;
 import com.pphh.demo.po.EmployeeJpaEntity;
+import com.pphh.demo.util.ConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,66 +25,84 @@ import java.util.List;
  * @date 6/24/2018
  */
 @Service
-public class EmployeeSpringDao {
+public class EmployeeSpringDao implements EmployeeDao {
 
     static Logger logger = LoggerFactory.getLogger(EmployeeSpringDao.class);
 
     @Autowired
-    EmployeeRepository employeeDao;
+    EmployeeRepository employeeRepo;
 
-    public EmployeeJpaEntity queryById(Long id) {
-        EmployeeJpaEntity employee = employeeDao.findOne(id);
-        printEmployeeInfo(employee);
-        return employee;
-    }
-
-    public Page<EmployeeJpaEntity> queryByPage(String field, String value, int page, int count) {
-
+    public Page<EmployeeEntity> queryByPage(String field, String value, int page, int count) {
         Specification<EmployeeJpaEntity> specification = new Specification<EmployeeJpaEntity>() {
             @Override
             public Predicate toPredicate(Root<EmployeeJpaEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-
                 Path<String> _name = root.get(field);
                 Predicate _key = criteriaBuilder.like(_name, "%" + value + "%");
                 return criteriaBuilder.and(_key);
-
             }
         };
 
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(page - 1, count, sort);
 
-        return employeeDao.findAll(specification, pageable);
+        Page<EmployeeJpaEntity> employeeJpaEntities = employeeRepo.findAll(specification, pageable);
+        return employeeJpaEntities.map(new EmployeeConverter());
     }
 
-    private void printEmployeeList(List<EmployeeJpaEntity> employees) {
-        if (employees != null) {
-            for (int i = 0; i < employees.size(); i++) {
-                if (i == 0) {
-                    logger.info("id - first name, last name, birth date, employed, occupation, insert by, insert at, update by, update at");
-                }
-
-                printEmployeeInfo(employees.get(i));
-            }
-        }
+    @Override
+    public EmployeeEntity selectById(long id) {
+        EmployeeJpaEntity employeeJpaEntity = employeeRepo.findOne(id);
+        return ConvertUtils.convert(employeeJpaEntity, EmployeeEntity.class);
     }
 
-    private void printEmployeeInfo(EmployeeJpaEntity employee) {
+    @Override
+    public List<EmployeeEntity> selectAll() {
+        List<EmployeeJpaEntity> employeeJpaEntities = employeeRepo.findAll();
+        return ConvertUtils.convert(employeeJpaEntities, EmployeeEntity.class);
+    }
 
-        if (employee != null) {
-            String msg = String.format("%s - %s, %s, %s, %s, %s, %s, %s, %s, %s",
-                    employee.getId(),
-                    employee.getFirstName(),
-                    employee.getLastName(),
-                    employee.getBirthDate(),
-                    employee.getEmployed(),
-                    employee.getOccupation(),
-                    employee.getInsertBy(),
-                    employee.getInsertTime(),
-                    employee.getUpdateBy(),
-                    employee.getUpdateTime());
-            logger.info(msg);
+    @Override
+    public EmployeeEntity selectLast() {
+        EmployeeJpaEntity employeeJpaEntity = employeeRepo.findTopByOrderByIdDesc();
+        return ConvertUtils.convert(employeeJpaEntity, EmployeeEntity.class);
+    }
+
+    @Override
+    public long count() {
+        return employeeRepo.count();
+    }
+
+    @Override
+    public long insert(EmployeeEntity employee) {
+        long newEmployeeId = 0;
+
+        EmployeeJpaEntity employeeJpaEntity = ConvertUtils.convert(employee, EmployeeJpaEntity.class);
+        employeeJpaEntity = employeeRepo.save(employeeJpaEntity);
+        if (employeeJpaEntity != null) {
+            newEmployeeId = employeeJpaEntity.getId();
+            employee.setId(newEmployeeId);
         }
 
+        return newEmployeeId;
+    }
+
+    @Override
+    public boolean update(EmployeeEntity employee) {
+        EmployeeJpaEntity employeeJpaEntity = ConvertUtils.convert(employee, EmployeeJpaEntity.class);
+        employeeJpaEntity = employeeRepo.save(employeeJpaEntity);
+        return employeeJpaEntity != null;
+    }
+
+    @Override
+    public boolean delete(EmployeeEntity employee) {
+        EmployeeJpaEntity employeeJpaEntity = ConvertUtils.convert(employee, EmployeeJpaEntity.class);
+        employeeRepo.delete(employeeJpaEntity);
+        return true;
+    }
+
+    @Override
+    public boolean deleteById(long id) {
+        employeeRepo.delete(id);
+        return false;
     }
 }
