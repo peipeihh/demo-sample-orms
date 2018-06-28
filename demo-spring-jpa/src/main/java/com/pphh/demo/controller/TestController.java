@@ -25,7 +25,7 @@ public class TestController {
     public String test() {
         DaoTester daoTester = DaoTester.getInstance();
         daoTester.run(employeeSpringDao);
-        return "spring dao test is completed, please check output log.";
+        return "spring jpa dao test is completed, please check output log.";
     }
 
     @RequestMapping("/selectById")
