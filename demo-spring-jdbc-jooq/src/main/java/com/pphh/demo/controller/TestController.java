@@ -23,9 +23,6 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private EmployeeJdbcJooqDao employeeJdbcJooqDao;
 
     @RequestMapping("/test")
