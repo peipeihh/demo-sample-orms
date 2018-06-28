@@ -1,4 +1,4 @@
-package com.pphh.demo.dao;
+package com.pphh.demo.mapper;
 
 import com.pphh.demo.po.EmployeeEntity;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -23,10 +23,31 @@ public class EmployeePreStatementCreator implements PreparedStatementCreator {
         if (employee == null) {
             throw new NullPointerException("employee cannot be null");
         }
-        this.sql = "insert into " +
+        this.sql = EmployeePreStatementCreator.getCreatorSql();
+        this.employee = employee;
+    }
+
+    public static String getCreatorSql() {
+        return "insert into " +
                 "employee (first_name, last_name, birth_date, employed, occupation, is_active, insert_time, insert_by, update_time, update_by)" +
                 "values  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        this.employee = employee;
+    }
+
+    public static String getUpdateSql(long id) {
+        return "update " +
+                "employee " +
+                "set " +
+                "first_name = ?, " +
+                "last_name = ?, " +
+                "birth_date = ?, " +
+                "employed = ?, " +
+                "occupation = ?, " +
+                "is_active = ?, " +
+                "insert_time = ?, " +
+                "insert_by = ?, " +
+                "update_time = ?, " +
+                "update_by = ? " +
+                "where id = " + id;
     }
 
     @Override

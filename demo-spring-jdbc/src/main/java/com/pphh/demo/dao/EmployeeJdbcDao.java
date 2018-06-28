@@ -1,5 +1,7 @@
 package com.pphh.demo.dao;
 
+import com.pphh.demo.mapper.EmployeePreStatementCreator;
+import com.pphh.demo.mapper.EmployeeRowMapper;
 import com.pphh.demo.po.EmployeeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,9 +48,7 @@ public class EmployeeJdbcDao implements EmployeeDao {
     }
 
     public boolean insertEx(EmployeeEntity employee) {
-        String sql = "insert into " +
-                "employee (first_name, last_name, birth_date, employed, occupation, is_active, insert_time, insert_by, update_time, update_by)" +
-                "values  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = EmployeePreStatementCreator.getCreatorSql();
         long rt = jdbcTemplate.update(sql,
                 employee.getFirstName(),
                 employee.getLastName(),
@@ -77,7 +77,19 @@ public class EmployeeJdbcDao implements EmployeeDao {
 
     @Override
     public boolean update(EmployeeEntity employee) {
-        return false;
+        String sql = EmployeePreStatementCreator.getUpdateSql(employee.getId());
+        long rt = jdbcTemplate.update(sql,
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getBirthDate(),
+                employee.getEmployed(),
+                employee.getOccupation(),
+                employee.getIsActive(),
+                employee.getInsertTime(),
+                employee.getInsertBy(),
+                employee.getUpdateTime(),
+                employee.getUpdateBy());
+        return rt > 0;
     }
 
     @Override

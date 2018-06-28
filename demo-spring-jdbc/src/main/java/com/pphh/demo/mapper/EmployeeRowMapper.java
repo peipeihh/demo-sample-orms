@@ -1,4 +1,4 @@
-package com.pphh.demo.dao;
+package com.pphh.demo.mapper;
 
 import com.pphh.demo.po.EmployeeEntity;
 import org.springframework.jdbc.core.RowMapper;

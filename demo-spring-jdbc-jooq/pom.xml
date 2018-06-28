@@ -9,20 +9,26 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-spring-boot-jooq</artifactId>
-
-    <properties>
-        <start-class>org.jooq.example.spring.Application</start-class>
-    </properties>
+    <artifactId>demo-spring-jdbc-jooq</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.pphh.demo</groupId>
+            <artifactId>common-orm</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pphh.demo</groupId>
+            <artifactId>demo-spring-jdbc</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
@@ -109,15 +115,9 @@
                         <artifactId>mysql-connector-java</artifactId>
                         <version>${mysql.driver.version}</version>
                     </dependency>
-                    <!--<dependency>-->
-                    <!--<groupId>com.h2database</groupId>-->
-                    <!--<artifactId>h2</artifactId>-->
-                    <!--<version>${h2.version}</version>-->
-                    <!--</dependency>-->
                 </dependencies>
             </plugin>
 
         </plugins>
     </build>
-
 </project>
