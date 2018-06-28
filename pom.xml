@@ -7,16 +7,16 @@
     <groupId>com.pphh.demo</groupId>
     <artifactId>simple-orm</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>demo-mybatis-v3</module>
         <module>demo-hibernate</module>
         <module>demo-ctrip-dal</module>
-        <module>demo-spring-jpa</module>
         <module>common-orm</module>
+        <module>demo-spring-boot-jdbc</module>
+        <module>demo-spring-boot-jpa</module>
         <module>demo-spring-boot-jooq</module>
-        <module>demo-spring-jdbc</module>
-        <module>demo-spring-jdbc-jooq</module>
+        <module>demo-spring-boot-jdbc-jooq</module>
     </modules>
 
     <properties>

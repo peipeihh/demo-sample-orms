@@ -1,16 +1,10 @@
 package com.pphh.demo.controller;
 
-import static com.pphh.demo.jooq.db.mysql.Tables.EMPLOYEE;
-
 import com.pphh.demo.DaoTester;
 import com.pphh.demo.dao.EmployeeJooqDao;
-import com.pphh.demo.jooq.db.mysql.tables.Employee;
-import com.pphh.demo.jooq.db.mysql.tables.records.EmployeeRecord;
 import com.pphh.demo.po.EmployeeEntity;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Record2;
-import org.jooq.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Please add description here.
+ * TestController
  *
  * @author huangyinhuang
  * @date 6/27/2018
@@ -27,36 +21,17 @@ import java.util.List;
 @RestController
 public class TestController {
 
-    @Autowired
-    private DSLContext dsl;
+    static Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Autowired
     private EmployeeJooqDao employeeJooqDao;
 
-//    @RequestMapping("test")
-//    public String test() {
-//        Employee e = EMPLOYEE.as("e");
-//        return dsl.select().from(e).getSQL();
-//    }
-//
-//    @RequestMapping("test2")
-//    public List<Employee> test2() {
-//        Result<EmployeeRecord> records = dsl.selectFrom(EMPLOYEE).fetch();
-//        return records.into(Employee.class);
-//    }
-//
-//    @RequestMapping("test3")
-//    public List<Employee> test3() {
-//        Employee e = EMPLOYEE.as("e");
-//        Result<Record2<String, String>> record2s = dsl.select(e.FIRST_NAME, e.LAST_NAME).from(e).fetch();
-//        return record2s.into(Employee.class);
-//    }
-
     @RequestMapping("/test")
     public String test() {
+        logger.info("test the jooq dao...");
         DaoTester daoTester = DaoTester.getInstance();
         daoTester.run(employeeJooqDao);
-        return "spring jdbc + jooq dao test is completed, please check output log.";
+        return "spring boot jooq dao test is completed, please check output log for test results.";
     }
 
     @RequestMapping("/selectById")

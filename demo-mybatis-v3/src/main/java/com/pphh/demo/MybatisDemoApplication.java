@@ -23,22 +23,13 @@ public class MybatisDemoApplication {
         logger.info("start...");
         DaoTester daoTester = DaoTester.getInstance();
 
-        EmployeeMybatisDao employeeDao = new EmployeeMybatisDao();
-        daoTester.run(employeeDao);
+        logger.info("test the mybatis dao with xml configuration...");
+        EmployeeMybatisDao mybatisDao = new EmployeeMybatisDao();
+        daoTester.run(mybatisDao);
 
-
-        logger.info("test the mybatis dynamic dao - count method...");
-        EmployeeMybatisDynamicDao mybatisDao = new EmployeeMybatisDynamicDao();
-        long count = mybatisDao.count();
-        logger.info("count = " + count);
-
-        logger.info("test the mybatis dynamic dao - select by id method...");
-        EmployeeEntity employeeEntity = mybatisDao.selectById(1L);
-        DemoUtils.printEmployeeInfo(employeeEntity);
-
-        logger.info("test the mybatis dynamic dao - select all method...");
-        List<EmployeeEntity> employees = mybatisDao.selectAll();
-        DemoUtils.printEmployeeList(employees);
+        //logger.info("test the mybatis dao with dynamic sql support...");
+        //EmployeeMybatisDynamicDao mybatisDynamicDao = new EmployeeMybatisDynamicDao();
+        //daoTester.run(mybatisDynamicDao);
 
         logger.info("the end.");
     }

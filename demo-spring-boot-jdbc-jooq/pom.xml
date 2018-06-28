@@ -5,22 +5,17 @@
     <parent>
         <artifactId>simple-orm</artifactId>
         <groupId>com.pphh.demo</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-spring-jdbc-jooq</artifactId>
+    <artifactId>demo-spring-boot-jdbc-jooq</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.pphh.demo</groupId>
             <artifactId>common-orm</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pphh.demo</groupId>
-            <artifactId>demo-spring-jdbc</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,6 +40,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -74,7 +76,7 @@
 
                 <executions>
                     <execution>
-                        <id>generate-h2</id>
+                        <id>generate-mysql</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
@@ -117,7 +119,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
         </plugins>
     </build>
 </project>

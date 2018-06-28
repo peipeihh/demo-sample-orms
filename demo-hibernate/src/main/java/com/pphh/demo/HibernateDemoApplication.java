@@ -16,9 +16,12 @@ public class HibernateDemoApplication {
 
     public static void main(String[] args) {
         logger.info("start...");
-        EmployeeHibernateDao employeeDao = new EmployeeHibernateDao();
         DaoTester daoTester = DaoTester.getInstance();
+
+        logger.info("test the hibernate dao...");
+        EmployeeHibernateDao employeeDao = new EmployeeHibernateDao();
         daoTester.run(employeeDao);
+
         logger.info("the end.");
     }
 

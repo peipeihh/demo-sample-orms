@@ -43,7 +43,7 @@ public interface EmployeeDao {
      * insert a employee entity into db
      *
      * @param employee a employee entity to be inserted
-     * @return the id of new employee entity
+     * @return the id of new employee entity, if failed then return -1
      */
     public long insert(EmployeeEntity employee);
 
