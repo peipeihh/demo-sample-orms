@@ -52,8 +52,14 @@ public class EmployeeJooqDao implements EmployeeDao {
 
     @Override
     public long insert(EmployeeEntity employee) {
+        long newEmployeeId = -1;
         EmployeeRecord record = dsl.newRecord(EMPLOYEE, employee);
-        return dsl.executeInsert(record);
+        int rt = record.store();
+        if (rt > 0) {
+            newEmployeeId = record.getId();
+            employee.setId(newEmployeeId);
+        }
+        return newEmployeeId;
     }
 
     @Override
