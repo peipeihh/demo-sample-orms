@@ -21,8 +21,7 @@
 
 ## 演示目标
 
-对于所有的框架，一一实现如下的DAO访问操作，并进行统一的测试操作，测试操作类见，
-- common-orm/src/main/java/com/pphh/demo/DaoTester
+对于所有的框架，逐一实现如下的DAO访问操作，并进行统一的测试流程，
 
 ``` java
 package com.pphh.demo.dao;
@@ -101,6 +100,9 @@ public interface EmployeeDao {
 }
 
 ```
+
+统一的测试操作类见，
+- common-orm/src/main/java/com/pphh/demo/DaoTester
 
 查询或存储的数据模型为，
 
