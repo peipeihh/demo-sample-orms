@@ -25,9 +25,9 @@ import java.util.List;
  * @date 6/24/2018
  */
 @Service
-public class EmployeeSpringDao implements EmployeeDao {
+public class EmployeeSpringJpaDao implements EmployeeDao {
 
-    static Logger logger = LoggerFactory.getLogger(EmployeeSpringDao.class);
+    static Logger logger = LoggerFactory.getLogger(EmployeeSpringJpaDao.class);
 
     @Autowired
     EmployeeRepository employeeRepo;

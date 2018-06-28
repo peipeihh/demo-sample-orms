@@ -2,7 +2,7 @@ package com.pphh.demo.controller;
 
 import com.pphh.demo.DaoTester;
 import com.pphh.demo.po.EmployeeEntity;
-import com.pphh.demo.service.EmployeeSpringDao;
+import com.pphh.demo.service.EmployeeSpringJpaDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    EmployeeSpringDao employeeSpringDao;
+    EmployeeSpringJpaDao employeeSpringDao;
 
     @RequestMapping("/test")
     public String test() {
