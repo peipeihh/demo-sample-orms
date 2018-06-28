@@ -1,10 +1,10 @@
 
 ## 项目介绍
 
-本项目演示了业界中较为流行使用的各大ORM/POJO Data Persistence框架的基本使用方法，包括数据模型的创建、实现各种数据访问操作（增删改查和分页）等。
+本项目演示了业界中较为流行使用的各大ORM（数据对象关系映射）/POJO Data Persistence框架的基本使用方法，包括数据模型的创建、实现各种数据访问操作（增删改查和分页）等。
 
-注1：ORM是Object Relation Map英文缩写，数据对象关系映射框架
-注2：POJO是Plain Ordinary Java Object，简单Java数据对象，其数据保存到数据库的过程为Data Persistence，即数据持久化
+- 注1：ORM是Object Relation Map英文缩写，数据对象关系映射框架
+- 注2：POJO是Plain Ordinary Java Object，简单Java数据对象，其数据保存到数据库的过程为Data Persistence，即数据持久化
 
 演示的ORM/POJO Data Persistence框架包括，
 
