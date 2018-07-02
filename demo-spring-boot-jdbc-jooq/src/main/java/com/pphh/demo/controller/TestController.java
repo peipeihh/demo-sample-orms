@@ -1,14 +1,11 @@
 package com.pphh.demo.controller;
 
 import com.pphh.demo.DaoTester;
-import com.pphh.demo.dao.EmployeeJdbcDao;
 import com.pphh.demo.dao.EmployeeJdbcJooqDao;
-import com.pphh.demo.jooq.db.mysql.tables.Employee;
 import com.pphh.demo.po.EmployeeEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

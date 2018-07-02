@@ -187,9 +187,12 @@ CREATE TABLE IF NOT EXISTS `simple_orm`.`employee` (
 ```
 
 请打开shell窗口，切换在演示项目的根目录中，执行如下命令，对项目编译打包，
+
 ``` bash
 mvn clean compile package
 ```
+
+注：在项目构建编译之前，请参考演示步骤1，启动和配置好数据库，因为在编译过程中jooq会根据数据库表信息来自动生成代码。
 
 ## 演示环境
 
@@ -204,6 +207,13 @@ mvn clean compile package
 
 2. 对项目进行构建打包
    - 构建命令 mvn clean compile package
+   - 注：在项目demo-spring-boot-jooq和demo-spring-boot-jdbc-jooq中，请到src/main/resources/application.properties中，配置数据库连接信息。一个连接样例如下，
+   ```
+   spring.datasource.driverClassName=com.mysql.jdbc.Driver
+   spring.datasource.url=jdbc:mysql://localhost:3306/simple_orm
+   spring.datasource.username=root
+   spring.datasource.password=root
+   ```
 
 3. 演示1 - MyBatis 3
    - 进入子项目demo-mybatis-v3中
