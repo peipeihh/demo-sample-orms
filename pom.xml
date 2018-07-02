@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pphh.demo</groupId>
-    <artifactId>simple-orm</artifactId>
+    <artifactId>sample-orms</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
