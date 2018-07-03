@@ -100,16 +100,19 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
 
     @Override
     public long insert(EmployeeEntity employee) {
-        int rt = 0;
+        long newEmployeeId = -1;
         try {
             EmployeeCtripEntity employeeCtripEntity = ConvertUtils.convert(employee, EmployeeCtripEntity.class);
             DalHints hints = DalHints.createIfAbsent(null);
-            rt = client.insert(hints, employeeCtripEntity);
-            employee.setId(employeeCtripEntity.getId());
+            int rt = client.insert(hints.setIdentityBack(), employeeCtripEntity);
+            if (rt > 0) {
+                newEmployeeId = employeeCtripEntity.getId();
+                employee.setId(newEmployeeId);
+            }
         } catch (SQLException e) {
             logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
         }
-        return rt;
+        return newEmployeeId;
     }
 
     @Override
