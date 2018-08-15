@@ -27,4 +27,6 @@ public interface EmployeeMapper {
 
     int count();
 
+    List<EmployeeMybatisEntity> queryByPage(@Param("index") int index, @Param("size") int size);
+
 }

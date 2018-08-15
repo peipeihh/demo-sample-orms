@@ -1,13 +1,8 @@
 package com.pphh.demo;
 
-import com.pphh.demo.dynamic.dao.EmployeeMybatisDynamicDao;
-import com.pphh.demo.po.EmployeeEntity;
-import com.pphh.demo.util.DemoUtils;
 import com.pphh.demo.xml.dao.EmployeeMybatisDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * MybatisDemoApplication

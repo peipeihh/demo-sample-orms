@@ -1,12 +1,10 @@
 package com.pphh.demo.dao;
 
-
 import com.pphh.demo.jooq.db.mysql.tables.Employee;
 import com.pphh.demo.jooq.db.mysql.tables.records.EmployeeRecord;
 import com.pphh.demo.po.EmployeeEntity;
-import org.jooq.DSLContext;
-import org.jooq.Record1;
-import org.jooq.Result;
+import com.pphh.demo.po.Page;
+import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -78,4 +76,27 @@ public class EmployeeJooqDao implements EmployeeDao {
     public boolean deleteById(long id) {
         return dsl.delete(e).where(e.ID.eq(id)).execute() > 0;
     }
+
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        if (index <= 0 || size <= 0) {
+            return null;
+        }
+
+        long totoalElements = count();
+        long totalPages = (long) Math.ceil((double) totoalElements / size);
+
+        int from = (index - 1) * size;
+        int to = index * size;
+        List<EmployeeEntity> content = dsl.select().from(e).limit(from, to).fetchInto(EmployeeEntity.class);
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(content);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+        return page;
+    }
+
 }

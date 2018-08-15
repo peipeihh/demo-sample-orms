@@ -3,6 +3,7 @@ package com.pphh.demo.xml.dao;
 import com.pphh.demo.EmployeeConverter;
 import com.pphh.demo.dao.EmployeeDao;
 import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.Page;
 import com.pphh.demo.util.ConvertUtils;
 import com.pphh.demo.xml.mapper.EmployeeMapper;
 import com.pphh.demo.po.EmployeeMybatisEntity;
@@ -185,6 +186,35 @@ public class EmployeeMybatisDao implements EmployeeDao {
         }
 
         return bSuccess;
+    }
+
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        List<EmployeeEntity> employees = null;
+
+        if (sqlSessionFactory != null) {
+            SqlSession session = sqlSessionFactory.openSession(true);
+            try {
+                EmployeeMapper imageMapper = session.getMapper(EmployeeMapper.class);
+                List<EmployeeMybatisEntity> mybatisEmployees = imageMapper.queryByPage(index, size);
+                employees = ConvertUtils.convert(mybatisEmployees, EmployeeConverter::convert);
+            } catch (Exception e) {
+                logger.error("an unexpected exception happens when executing mybatis sql session/mapper.", e.getMessage());
+            } finally {
+                session.close();
+            }
+        }
+
+        long totoalElements = count();
+        long totalPages = (long) Math.ceil((double) totoalElements / size);
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(employees);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+        return page;
     }
 
 }

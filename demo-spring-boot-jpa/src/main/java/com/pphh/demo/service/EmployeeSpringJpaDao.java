@@ -32,23 +32,6 @@ public class EmployeeSpringJpaDao implements EmployeeDao {
     @Autowired
     EmployeeRepository employeeRepo;
 
-    public Page<EmployeeEntity> queryByPage(String field, String value, int page, int count) {
-        Specification<EmployeeJpaEntity> specification = new Specification<EmployeeJpaEntity>() {
-            @Override
-            public Predicate toPredicate(Root<EmployeeJpaEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                Path<String> _name = root.get(field);
-                Predicate _key = criteriaBuilder.like(_name, "%" + value + "%");
-                return criteriaBuilder.and(_key);
-            }
-        };
-
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(page - 1, count, sort);
-
-        Page<EmployeeJpaEntity> employeeJpaEntities = employeeRepo.findAll(specification, pageable);
-        return employeeJpaEntities.map(new EmployeeConverter());
-    }
-
     @Override
     public EmployeeEntity selectById(long id) {
         EmployeeJpaEntity employeeJpaEntity = employeeRepo.findOne(id);
@@ -104,5 +87,41 @@ public class EmployeeSpringJpaDao implements EmployeeDao {
     public boolean deleteById(long id) {
         employeeRepo.delete(id);
         return false;
+    }
+
+    @Override
+    public com.pphh.demo.po.Page<EmployeeEntity> queryByPage(int index, int size) {
+        if (index <= 0 || size <= 0) {
+            return null;
+        }
+
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest(index - 1, size, sort);
+        Page<EmployeeJpaEntity> employeeJpaEntities = employeeRepo.findAll(pageable);
+
+        com.pphh.demo.po.Page<EmployeeEntity> page = new com.pphh.demo.po.Page<>();
+        page.setContent(ConvertUtils.convert(employeeJpaEntities.getContent(), EmployeeEntity.class));
+        page.setIndex(employeeJpaEntities.getNumber() + 1);
+        page.setSize(employeeJpaEntities.getSize());
+        page.setTotoalElements(employeeJpaEntities.getTotalElements());
+        page.setTotoalPages(employeeJpaEntities.getTotalPages());
+        return page;
+    }
+
+    public Page<EmployeeEntity> queryByPage(String field, String value, int index, int size) {
+        Specification<EmployeeJpaEntity> specification = new Specification<EmployeeJpaEntity>() {
+            @Override
+            public Predicate toPredicate(Root<EmployeeJpaEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                Path<String> _name = root.get(field);
+                Predicate _key = criteriaBuilder.like(_name, "%" + value + "%");
+                return criteriaBuilder.and(_key);
+            }
+        };
+
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(index - 1, size, sort);
+
+        Page<EmployeeJpaEntity> employeeJpaEntities = employeeRepo.findAll(specification, pageable);
+        return employeeJpaEntities.map(new EmployeeConverter());
     }
 }

@@ -5,6 +5,7 @@ import com.pphh.demo.dao.EmployeeDao;
 import com.pphh.demo.dynamic.mapper.SimpleTableAnnotatedMapper;
 import com.pphh.demo.po.EmployeeEntity;
 import com.pphh.demo.po.EmployeeMybatisEntity;
+import com.pphh.demo.po.Page;
 import com.pphh.demo.util.ConvertUtils;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -149,5 +150,10 @@ public class EmployeeMybatisDynamicDao implements EmployeeDao {
     @Override
     public boolean deleteById(long id) {
         return false;
+    }
+
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        return null;
     }
 }

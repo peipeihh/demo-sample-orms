@@ -44,8 +44,14 @@ public class TestController {
     }
 
     @RequestMapping("/page")
-    public Page<EmployeeEntity> getByPage() {
-        return employeeSpringDao.queryByPage("firstName", "test", 2, 2);
+    public com.pphh.demo.po.Page<EmployeeEntity> getByPage(@RequestParam(name = "index") Integer index,
+                                                           @RequestParam(name = "size") Integer size) {
+        return employeeSpringDao.queryByPage(index, size);
+    }
+
+    @RequestMapping("/page/complex")
+    public Page<EmployeeEntity> getByPageEx() {
+        return employeeSpringDao.queryByPage("firstName", "test", 2, 5);
     }
 
 }

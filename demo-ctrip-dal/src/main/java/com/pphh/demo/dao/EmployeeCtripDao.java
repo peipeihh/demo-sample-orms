@@ -10,6 +10,7 @@ import com.ctrip.platform.dal.dao.sqlbuilder.FreeSelectSqlBuilder;
 import com.ctrip.platform.dal.dao.sqlbuilder.SelectSqlBuilder;
 import com.pphh.demo.po.EmployeeCtripEntity;
 import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.Page;
 import com.pphh.demo.util.ConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +64,6 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
 
     @Override
     public EmployeeEntity selectLast() {
-        SelectSqlBuilder selectCount = new SelectSqlBuilder().select();
         EmployeeEntity employeeEntity = null;
         try {
             FreeSelectSqlBuilder query = new FreeSelectSqlBuilder<EmployeeCtripEntity>();
@@ -158,5 +158,31 @@ public class EmployeeCtripDao extends CtripAbstractDao implements EmployeeDao {
         return rt;
     }
 
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        if (index <= 0 || size <= 0) {
+            return null;
+        }
+
+        long totoalElements = count();
+        long totalPages = (long) Math.ceil((double) totoalElements / size);
+
+        List<EmployeeEntity> employeeList = null;
+        try {
+            SelectSqlBuilder selectCount = new SelectSqlBuilder().selectAll().atPage(index, size);
+            List<EmployeeCtripEntity> employeeCtripList = client.query(selectCount, DalHints.createIfAbsent(null));
+            employeeList = ConvertUtils.convert(employeeCtripList, EmployeeEntity.class);
+        } catch (SQLException e) {
+            logger.error("an unexpected exception happens when using ctrip dao client.", e.getMessage());
+        }
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(employeeList);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+        return page;
+    }
 
 }

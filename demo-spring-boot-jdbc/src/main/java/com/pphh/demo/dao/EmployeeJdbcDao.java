@@ -3,6 +3,7 @@ package com.pphh.demo.dao;
 import com.pphh.demo.mapper.EmployeePreStatementCreator;
 import com.pphh.demo.mapper.EmployeeRowMapper;
 import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -106,6 +107,29 @@ public class EmployeeJdbcDao implements EmployeeDao {
         String sql = "delete from employee where id = ?";
         int rt = jdbcTemplate.update(sql, id);
         return rt > 0;
+    }
+
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        if (index <= 0 || size <= 0) {
+            return null;
+        }
+
+        long totoalElements = count();
+        long totalPages = (long) Math.ceil((double) totoalElements / size);
+
+        long from = (index - 1) * size;
+        long to = index * size;
+        String sql = String.format("select * from employee limit %s, %s", from, to);
+        List<EmployeeEntity> content = jdbcTemplate.query(sql, new EmployeeRowMapper());
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(content);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+        return page;
     }
 
 }

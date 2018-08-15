@@ -7,6 +7,7 @@ import com.pphh.demo.jooq.db.mysql.tables.records.EmployeeRecord;
 import com.pphh.demo.mapper.EmployeePreStatementCreator;
 import com.pphh.demo.mapper.EmployeeRowMapper;
 import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.Page;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -121,10 +122,31 @@ public class EmployeeJdbcJooqDao implements EmployeeDao {
     @Override
     public boolean deleteById(long id) {
         //String sql = "delete from employee where id = ?";
-        String sql = dsl.delete(e).where(e.ID.eq(id)).getSQL();
         DeleteConditionStep<EmployeeRecord> query = dsl.delete(e).where(e.ID.eq(id));
         int rt = jdbcTemplate.update(query.getSQL(), query.getBindValues().toArray());
         return rt > 0;
     }
 
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        if (index <= 0 || size <= 0) {
+            return null;
+        }
+
+        long totoalElements = count();
+        long totalPages = (long) Math.ceil((double) totoalElements / size);
+
+        long from = (index - 1) * size;
+        long to = index * size;
+        SelectWithTiesAfterOffsetStep<Record> query = dsl.select().from(e).limit((int) from, (int) to);
+        List<EmployeeEntity> content = jdbcTemplate.query(query.getSQL(), query.getBindValues().toArray(), new EmployeeRowMapper());
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(content);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+        return page;
+    }
 }

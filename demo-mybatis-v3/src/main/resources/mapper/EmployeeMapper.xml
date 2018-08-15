@@ -67,4 +67,8 @@
         select count(*) from employee where is_active != 0
     </select>
 
+    <select id="queryByPage" resultType="com.pphh.demo.po.EmployeeMybatisEntity">
+        select * from employee limit #{index} , #{size}
+    </select>
+
 </mapper>

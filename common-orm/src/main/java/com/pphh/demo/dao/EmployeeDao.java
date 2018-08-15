@@ -1,6 +1,7 @@
 package com.pphh.demo.dao;
 
 import com.pphh.demo.po.EmployeeEntity;
+import com.pphh.demo.po.Page;
 
 import java.util.List;
 
@@ -70,5 +71,14 @@ public interface EmployeeDao {
      * @return true if success, otherwise false
      */
     public boolean deleteById(long id);
+
+    /**
+     * page query
+     *
+     * @param index the index of page，value should be greater than 0
+     * @param size  the size of page，value should be greater than 0
+     * @return the page of employee entities
+     */
+    public Page<EmployeeEntity> queryByPage(int index, int size);
 
 }

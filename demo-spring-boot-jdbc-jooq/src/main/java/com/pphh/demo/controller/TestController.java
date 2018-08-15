@@ -74,4 +74,9 @@ public class TestController {
         return employeeJdbcJooqDao.deleteById(id);
     }
 
+    @RequestMapping("/page")
+    public com.pphh.demo.po.Page<EmployeeEntity> getByPage(@RequestParam(name = "index") Integer index,
+                                                           @RequestParam(name = "size") Integer size) {
+        return employeeJdbcJooqDao.queryByPage(index, size);
+    }
 }

@@ -2,12 +2,11 @@ package com.pphh.demo.dao;
 
 import com.pphh.demo.po.EmployeeEntity;
 import com.pphh.demo.po.EmployeeHibernateEntity;
+import com.pphh.demo.po.Page;
 import com.pphh.demo.util.ConvertUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -217,6 +216,43 @@ public class EmployeeHibernateDao implements EmployeeDao {
         }
 
         return bSuccess;
+    }
+
+    @Override
+    public Page<EmployeeEntity> queryByPage(int index, int size) {
+        List<EmployeeEntity> employeeList = null;
+
+        long totoalElements = 0;
+        long totalPages = 0;
+        int from = (index - 1) * size;
+
+        Session session = sessionFactory.openSession();
+        try {
+            Query query = session.createQuery("FROM EmployeeHibernateEntity");
+
+            ScrollableResults scroll = query.scroll();
+            scroll.last();
+            totoalElements = scroll.getRowNumber() + 1;
+            totalPages = (long) Math.ceil((double) totoalElements / size);
+
+            query.setFirstResult(from);
+            query.setMaxResults(size);
+            List employeeHibernateList = query.list();
+            employeeList = ConvertUtils.convert(employeeHibernateList, EmployeeEntity.class);
+        } catch (HibernateException e) {
+            logger.info("A exception happens when executing hibernate sql session.", e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        Page<EmployeeEntity> page = new Page<>();
+        page.setContent(employeeList);
+        page.setTotoalElements(totoalElements);
+        page.setIndex(index);
+        page.setSize(size);
+        page.setTotoalPages(totalPages);
+
+        return page;
     }
 
 }

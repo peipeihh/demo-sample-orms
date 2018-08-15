@@ -48,4 +48,10 @@ public class TestController {
         return employeeJdbcDao.deleteById(id);
     }
 
+    @RequestMapping("/page")
+    public com.pphh.demo.po.Page<EmployeeEntity> getByPage(@RequestParam(name = "index") Integer index,
+                                                           @RequestParam(name = "size") Integer size) {
+        return employeeJdbcDao.queryByPage(index, size);
+    }
+
 }

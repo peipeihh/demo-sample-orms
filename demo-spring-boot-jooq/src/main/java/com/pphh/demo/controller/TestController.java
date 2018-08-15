@@ -73,4 +73,10 @@ public class TestController {
     public Boolean deleteById(@RequestParam(name = "id") Long id) {
         return employeeJooqDao.deleteById(id);
     }
+
+    @RequestMapping("/page")
+    public com.pphh.demo.po.Page<EmployeeEntity> getByPage(@RequestParam(name = "index") Integer index,
+                                                           @RequestParam(name = "size") Integer size) {
+        return employeeJooqDao.queryByPage(index, size);
+    }
 }
